@@ -85,7 +85,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Ilham & Refni Wedding" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
+      <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
           <Box sx={{ mb: 2, mt: 3 }}>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
@@ -176,10 +176,17 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && guestCount ? false : true) : (username ? false : true)} onClick={() => {router.push('/invitation')}} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
+            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation') }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
           </Box>
         </Box>
       </Box>
+      <footer>
+        <Box sx={{ pb: 3 }}>
+          <Typography align={'center'} variant={"body1"} sx={{ color: 'white' }}>
+            © {new Date().getFullYear()} by: @imaha7
+          </Typography>
+        </Box>
+      </footer>
     </Container>
 
   )

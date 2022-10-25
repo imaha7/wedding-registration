@@ -34,7 +34,7 @@ const Invitation: NextPage = () => {
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
+      <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
           <Box sx={{ mb: 0 }}>
             <Typography variant={"h4"} sx={{ color: 'white' }}>
@@ -92,6 +92,13 @@ const Invitation: NextPage = () => {
           </Box>
         </Box>
       </Box>
+      <footer>
+        <Box sx={{ pb: 3 }}>
+          <Typography align={'center'} variant={"body1"} sx={{ color: 'white' }}>
+            © {new Date().getFullYear()} by: @imaha7
+          </Typography>
+        </Box>
+      </footer>
     </Container>
 
   )
