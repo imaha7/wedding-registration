@@ -6,7 +6,24 @@ import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query
 import { Box, LinearProgress } from '@mui/material';
 import { useRouter } from 'next/router';
 
-function Loading() {
+function MyApp({ Component, pageProps }: AppProps) {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#74ABFF"
+      },
+      success: {
+        main: "#74FF82",
+      },
+      error: {
+        main: "#FF7474",
+      },
+    },
+    typography: {
+      fontFamily: "Gotham Rounded",
+    }
+  });
+  const queryClient = useRef(new QueryClient());
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -26,38 +43,16 @@ function Loading() {
   }, [router, loading]);
 
   return (
-    loading && (
-      <Box sx={{ width: "100%", position: "fixed" }}>
-        <LinearProgress />
-      </Box>
-    )
-  );
-}
-
-function MyApp({ Component, pageProps }: AppProps) {
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#74ABFF"
-      },
-      success: {
-        main: "#74FF82",
-      },
-      error: {
-        main: "#FF7474",
-      },
-    },
-    typography: {
-      fontFamily: "Gotham Rounded",
-    }
-  });
-  const queryClient = useRef(new QueryClient());
-
-  return (
     <QueryClientProvider client={queryClient.current}>
       {/* <Hydrate state={pageProps.dehydratedState}> */}
       <ThemeProvider theme={theme}>
-        <Loading />
+        {
+          loading && (
+            <Box sx={{ width: "100%", position: "fixed" }}>
+              <LinearProgress />
+            </Box>
+          )
+        }
         <Component {...pageProps} />
       </ThemeProvider>
       {/* </Hydrate> */}
