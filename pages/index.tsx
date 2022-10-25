@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState, useEffect } from 'react';
-import { Box, CircularProgress, FormControlLabel, Switch, SwitchProps, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Theme, createTheme, ToggleButtonGroup, FormControl, Input, InputAdornment, FormHelperText, Button } from '@mui/material';
-import { CheckCircle, CloseRounded, GroupsOutlined, PersonOutlineOutlined } from '@mui/icons-material';
+import { Box, CircularProgress, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, ToggleButtonGroup, FormControl, Input, InputAdornment, FormHelperText, Button } from '@mui/material';
+import { GroupsOutlined, PersonOutlineOutlined } from '@mui/icons-material';
 import { getUsers } from "../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from 'next/router';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   backgroundColor: 'white',
@@ -41,10 +42,11 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const Home: NextPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
-  const [user, setUser] = React.useState<any>([]);
-  const [username, setUsername] = React.useState<any>('');
-  const [guestCount, setGuestCount] = React.useState<any>(null);
-  const [tab, setTab] = React.useState('register');
+  const router = useRouter();
+  const [user, setUser] = useState<any>([]);
+  const [username, setUsername] = useState<any>('');
+  const [guestCount, setGuestCount] = useState<any>(null);
+  const [tab, setTab] = useState('register');
 
   const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -88,7 +90,7 @@ const Home: NextPage = () => {
           <Box sx={{ mb: 2, mt: 3 }}>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
               <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 120 : 156, height: !isMobile ? 120 : 156, borderRadius: '10px' }} />
+                <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
               </Grid>
               <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                 <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
@@ -96,11 +98,11 @@ const Home: NextPage = () => {
                 </Typography>
               </Grid>
               <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 120 : 156, height: !isMobile ? 120 : 156, borderRadius: '10px' }} />
+                <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
               </Grid>
             </Grid>
           </Box>
-          <Box sx={{ mb: 2, mt: 3 }}>
+          <Box sx={{ mb: 5, mt: 3 }}>
             <Typography align={'center'} variant={"h4"} sx={{ color: 'white' }}>
               You’re Invited to Our Wedding Party!
             </Typography>
@@ -174,7 +176,7 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && guestCount ? false : true) : (username ? false : true)} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
+            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && guestCount ? false : true) : (username ? false : true)} onClick={() => {router.push('/invitation')}} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
           </Box>
         </Box>
       </Box>
