@@ -6,6 +6,17 @@ import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query
 
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#74ABFF"
+      },
+      success: {
+        main: "#74FF82",
+      },
+      error: {
+        main: "#FF7474",
+      },
+    },
     typography: {
       fontFamily: "Gotham Rounded",
     }
