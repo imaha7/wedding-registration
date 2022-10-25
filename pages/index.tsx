@@ -91,7 +91,7 @@ const Home: NextPage = () => {
                 <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 120 : 156, height: !isMobile ? 120 : 156, borderRadius: '10px' }} />
               </Grid>
               <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes' }}>
+                <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
                   Ilham & Refni
                 </Typography>
               </Grid>
@@ -101,14 +101,14 @@ const Home: NextPage = () => {
             </Grid>
           </Box>
           <Box sx={{ mb: 2, mt: 3 }}>
-            <Typography align={'center'} variant={"h4"}>
+            <Typography align={'center'} variant={"h4"} sx={{ color: 'white' }}>
               You’re Invited to Our Wedding Party!
             </Typography>
           </Box>
         </Box>
         <Box sx={{ backgroundColor: '#2b2b2b', borderRadius: '30px', py: 2, px: 3, mt: -4 }}>
           <Box sx={{ mb: 3 }}>
-            <Typography variant={"h5"}>
+            <Typography variant={"h5"} sx={{ color: 'white' }}>
               Please Write Down Your Identity
             </Typography>
           </Box>
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
             </StyledToggleButtonGroup>
           </Box>
           <Box sx={{ mb: 0.5 }}>
-            <Typography variant={"subtitle2"}>
+            <Typography variant={"subtitle2"} sx={{ color: 'white' }}>
               Username
             </Typography>
           </Box>
@@ -151,7 +151,7 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ mb: 0.5, display: tab === 'login' ? 'none' : 'normal' }}>
-            <Typography variant={"subtitle2"}>
+            <Typography variant={"subtitle2"} sx={{ color: 'white' }}>
               Family / Friend / Partner / Invited Guest Count
             </Typography>
           </Box>
