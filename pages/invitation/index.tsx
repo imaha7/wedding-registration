@@ -6,12 +6,29 @@ import { LocationOnOutlined } from '@mui/icons-material';
 import { getUsers } from "../../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
+import { useRouter } from 'next/router';
 
 const Invitation: NextPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
+  const router = useRouter();
   const [user, setUser] = useState<any>([]);
   const [tab, setTab] = useState('register');
+
+  const downloadQRCode = () => {
+    // const canvas: any = document.getElementById("qr-code");
+    // if (canvas) {
+    //   const pngUrl = canvas
+    //     .toDataURL("image/png")
+    //     .replace("image/png", "image/octet-stream");
+    //   let downloadLink = document.createElement("a");
+    //   downloadLink.href = pngUrl
+    //   downloadLink.download = `qr-code-wedding.png`;
+    //   document.body.appendChild(downloadLink);
+    //   downloadLink.click();
+    //   document.body.removeChild(downloadLink);
+    // }
+  };
 
   const getUsersRandom = useMutation(() => getUsers(), {
     onMutate: () => {
@@ -70,6 +87,7 @@ const Invitation: NextPage = () => {
           </Box>
           <Box sx={{ backgroundColor: 'white', borderRadius: '15px', p: 2, mb: 4 }}>
             <QRCode
+              id={'qr-code'}
               size={48}
               style={{ height: "auto", width: "100%", textAlign: 'center', }}
               value={'1'}
@@ -79,11 +97,11 @@ const Invitation: NextPage = () => {
           <Box>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={2}>
               <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
-                <Button fullWidth variant="contained" sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Download</Button>
+                <Button fullWidth variant="contained" onClick={downloadQRCode} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Download</Button>
               </Grid>
               <Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
                 <Box sx={{ width: '100%', textAlign: 'center', backgroundColor: 'white', borderRadius: '10px' }}>
-                  <IconButton color="primary" size={'small'} aria-label="location" component="label" sx={{ backgroundColor: 'white', borderRadius: '10px' }}>
+                  <IconButton color="primary" size={'small'} aria-label="location" component="label" onClick={() => { router.replace('https://goo.gl/maps/PcFhjJFBH9sHGAC49') }} sx={{ backgroundColor: 'white', borderRadius: '10px' }}>
                     <LocationOnOutlined />
                   </IconButton>
                 </Box>
