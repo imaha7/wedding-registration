@@ -45,11 +45,16 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>([]);
   const [username, setUsername] = useState<any>('');
+  const [name, setName] = useState<any>('');
   const [guestCount, setGuestCount] = useState<any>(null);
   const [tab, setTab] = useState('register');
 
   const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
+  };
+
+  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
   };
 
   const handleChangeGuestCount = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +66,7 @@ const Home: NextPage = () => {
       setTab(tab);
     }
     setUsername('');
+    setName('');
     setGuestCount('');
   };
 
@@ -139,9 +145,31 @@ const Home: NextPage = () => {
             <FormControl variant="standard" fullWidth>
               <Input
                 id="standard-adornment-weight"
-                placeholder={"@username"}
+                placeholder={"e.g : username"}
                 value={username}
                 onChange={handleChangeUsername}
+                startAdornment={<InputAdornment position="start"><PersonOutlineOutlined sx={{ color: 'white' }} /></InputAdornment>}
+                aria-describedby="standard-weight-helper-text"
+                inputProps={{
+                  'aria-label': 'weight',
+                }}
+                sx={{ borderBottom: '1px solid white', color: 'white' }}
+              />
+              {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
+            </FormControl>
+          </Box>
+          <Box sx={{ mb: 0.5, display: tab === 'login' ? 'none' : 'normal' }}>
+            <Typography variant={"subtitle2"} sx={{ color: 'white' }}>
+              Full Name
+            </Typography>
+          </Box>
+          <Box sx={{ width: '100%', color: 'white', display: tab === 'login' ? 'none' : 'normal', mb: 4 }}>
+            <FormControl variant="standard" fullWidth>
+              <Input
+                id="standard-adornment-weight"
+                placeholder={"e.g : John Doe"}
+                value={name}
+                onChange={handleChangeName}
                 startAdornment={<InputAdornment position="start"><PersonOutlineOutlined sx={{ color: 'white' }} /></InputAdornment>}
                 aria-describedby="standard-weight-helper-text"
                 inputProps={{
@@ -176,7 +204,7 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation') }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
+            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation') }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
           </Box>
         </Box>
       </Box>
