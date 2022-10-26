@@ -1,34 +1,36 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton } from '@mui/material';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
+import { Box, Typography, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton } from '@mui/material';
 import { LocationOnOutlined } from '@mui/icons-material';
 import { getUsers } from "../../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
 import { useRouter } from 'next/router';
+import { toPng } from 'html-to-image'
 
 const Invitation: NextPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
   const [user, setUser] = useState<any>([]);
-  const [tab, setTab] = useState('register');
+  const ref = useRef<HTMLDivElement>(null);
 
-  const downloadQRCode = () => {
-    // const canvas: any = document.getElementById("qr-code");
-    // if (canvas) {
-    //   const pngUrl = canvas
-    //     .toDataURL("image/png")
-    //     .replace("image/png", "image/octet-stream");
-    //   let downloadLink = document.createElement("a");
-    //   downloadLink.href = pngUrl
-    //   downloadLink.download = `qr-code-wedding.png`;
-    //   document.body.appendChild(downloadLink);
-    //   downloadLink.click();
-    //   document.body.removeChild(downloadLink);
-    // }
-  };
+  const downloadPng = useCallback(() => {
+    if (ref.current === null) {
+      return
+    }
+    toPng(ref.current, { cacheBust: true, })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = `${('Invitation-Wedding.png')}`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [ref]);
 
   const getUsersRandom = useMutation(() => getUsers(), {
     onMutate: () => {
@@ -51,7 +53,7 @@ const Invitation: NextPage = () => {
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{ mb: 3 }}>
+      <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
           <Box sx={{ mb: 0 }}>
             <Typography variant={"h4"} sx={{ color: 'white' }}>
@@ -66,10 +68,10 @@ const Invitation: NextPage = () => {
           <Box sx={{ mb: 2, mt: 3 }}>
             <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
               <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                <Avatar alt={'picture 1'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
               </Grid>
               <Grid container justifyContent={'flex-start'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                <Avatar alt={'picture 3'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
               </Grid>
             </Grid>
           </Box>
@@ -97,7 +99,7 @@ const Invitation: NextPage = () => {
           <Box>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={2}>
               <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
-                <Button fullWidth variant="contained" onClick={downloadQRCode} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Download</Button>
+                <Button fullWidth variant="contained" onClick={downloadPng} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Download</Button>
               </Grid>
               <Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
                 <Box sx={{ width: '100%', textAlign: 'center', backgroundColor: 'white', borderRadius: '10px' }}>
