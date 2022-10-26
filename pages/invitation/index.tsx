@@ -51,7 +51,7 @@ const Invitation: NextPage = () => {
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{ minHeight: '100vh', mb: 3 }}>
+      <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
           <Box sx={{ mb: 0 }}>
             <Typography variant={"h4"} sx={{ color: 'white' }}>

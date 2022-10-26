@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton, Stack, FormControl, Input, OutlinedInput } from '@mui/material';
+import { Box, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton } from '@mui/material';
 import { LocationOnOutlined, SearchOutlined } from '@mui/icons-material';
 import { getUsers } from "../../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
@@ -35,7 +35,7 @@ const User: NextPage = () => {
         <meta name="description" content="List Users" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{ minHeight: '100vh', mb: 0 }}>
+      <Box sx={{ mb: 0 }}>
         <Box sx={{ mb: 3 }}>
           <Typography variant={"h6"} sx={{ color: 'white' }}>
             Registered Users
@@ -44,27 +44,30 @@ const User: NextPage = () => {
         <Box sx={{ mb: 2 }}>
           <PerfectScrollbar>
             {['John Doe 1', 'John Doe 2', 'John Doe 3', 'John Doe 4', 'John Doe 5', 'John Doe 6'].map((item: any, index: number) => (
-              <Box key={index} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
-                <Box sx={{ mb: 1 }}>
-                  <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                    <Box>
-                      <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                        {item}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                      <Typography variant={"caption"} align={'center'} sx={{ color: 'white' }}>
-                        Will Attend
-                      </Typography>
-                    </Box>
-                  </Stack>
+              <ListItemButton key={index} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
+                <Box sx={{ width: '100%' }}>
+                  <Box sx={{ mb: 1 }}>
+                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
+                      <Box>
+                        <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                          {item}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                        <Typography variant={"caption"} align={'center'} sx={{ color: 'white' }}>
+                          Will Attend
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  </Box>
+                  <Box>
+                    <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                      Family / Friends / Partner / Invited Guest Count : 2
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box>
-                  <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                    Family / Friends / Partner / Invited Guest Count : 2
-                  </Typography>
-                </Box>
-              </Box>
+              </ListItemButton>
+
             ))}
           </PerfectScrollbar>
         </Box>

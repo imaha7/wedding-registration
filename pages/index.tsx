@@ -91,7 +91,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Ilham & Refni Wedding" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{ minHeight: '100vh', mb: 3 }}>
+      <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
           <Box sx={{ mb: 2, mt: 3 }}>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
