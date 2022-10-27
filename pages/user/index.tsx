@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton } from '@mui/material';
 import { LocationOnOutlined, SearchOutlined } from '@mui/icons-material';
 import { getUsers } from "../../actions/userAction";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -14,17 +14,50 @@ const User: NextPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>([]);
 
-  const getUsersRandom = useMutation(() => getUsers(), {
-    onMutate: () => {
-      return {};
-    },
-    onSuccess: (response: any) => {
-      setUser(response.results);
-    },
-    onError: (error: any) => {
-      console.log("error", error);
-    },
-  });
+  // const getUsersRandom = useMutation(() => getUsers(), {
+  //   onMutate: () => {
+  //     return {};
+  //   },
+  //   onSuccess: (response: any) => {
+  //     setUser(response.results);
+  //   },
+  //   onError: (error: any) => {
+  //     console.log("error", error);
+  //   },
+  // });
+
+  // const getUsersRegistration = useQuery(['getUsers'], () => getUsers(), {
+  //   keepPreviousData: true,
+  //   refetchOnWindowFocus: false,
+  //   onSuccess: (response) => {
+  //     if (response.results) {
+  //       setUser(response.results);
+  //       console.log("Data : ", user);
+  //     } else {
+  //       setUser([]);
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //   }
+  // });
+
+  const fetchPokemons = async ({ pageParam = 0 }) => {
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=' + pageParam + 'offset=0');
+    return res.json();
+  }
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery(['results'], fetchPokemons, {
+    getNextPageParam: (lastPage: any, pages: any) => lastPage.nextCursor,
+  })
 
   useEffect(() => { }, []);
 
@@ -43,32 +76,51 @@ const User: NextPage = () => {
         </Box>
         <Box sx={{ mb: 2 }}>
           <PerfectScrollbar>
-            {['John Doe 1', 'John Doe 2', 'John Doe 3', 'John Doe 4', 'John Doe 5', 'John Doe 6'].map((item: any, index: number) => (
-              <ListItemButton key={index} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
-                <Box sx={{ width: '100%' }}>
-                  <Box sx={{ mb: 1 }}>
-                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                      <Box>
-                        <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                          {item}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                        <Typography variant={"caption"} align={'center'} sx={{ color: 'white' }}>
-                          Will Attend
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Box>
-                  <Box>
-                    <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                      Family / Friends / Partner / Invited Guest Count : 2
-                    </Typography>
-                  </Box>
-                </Box>
-              </ListItemButton>
-
-            ))}
+            {status === 'loading' ?
+              <p>Loading...</p> :
+              <>
+                {
+                  data?.pages.map((group: any, index: number) => (
+                    <React.Fragment key={index}>
+                      {group.results.map((item: any) => (
+                        <ListItemButton key={item.name} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
+                          <Box sx={{ width: '100%' }}>
+                            <Box sx={{ mb: 1 }}>
+                              <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
+                                <Box>
+                                  <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                                    {item.name}
+                                  </Typography>
+                                </Box>
+                                <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                                  <Typography variant={"caption"} align={'center'} sx={{ color: 'white' }}>
+                                    Will Attend
+                                  </Typography>
+                                </Box>
+                              </Stack>
+                            </Box>
+                            <Box>
+                              <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                                Family / Friends / Partner / Invited Guest Count : 2
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </ListItemButton>
+                      ))}
+                    </React.Fragment>
+                  ))
+                }
+              </>
+            }
+            <Box>
+              <Button fullWidth variant="contained" disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{isFetchingNextPage ? 'Loading more...' : (hasNextPage ? 'Load More' : 'Nothing more to load')}</Button>
+            </Box>
+            <Box>
+              {isFetching && !isFetchingNextPage ?
+                <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                  Fetching...
+                </Typography> : null}
+            </Box>
           </PerfectScrollbar>
         </Box>
         <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#2b2b2b' }}>

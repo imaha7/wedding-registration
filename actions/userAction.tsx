@@ -1,7 +1,7 @@
 import axios from "../utils/axios";
 
 export const getUsers = async () => {
-    let response = await axios.get('/');
+    let response = await axios.get('/pokemon?limit=0');
     try {
         // if (order) {
         //     response = await axios.get('/users?order=' + order + '&page=' + page + '&take=' + take + '&search=' + search + '&type_user=' + type_user);
