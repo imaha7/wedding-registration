@@ -69,10 +69,37 @@ const User: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{ mb: 0 }}>
-        <Box sx={{ mb: 3 }}>
-          <Typography variant={"h6"} sx={{ color: 'white' }}>
-            Registered Users
-          </Typography>
+        <Box sx={{ backgroundColor: '#2b2b2b', mb: 3 }}>
+          <Box sx={{ mb: 1 }}>
+            <Typography variant={"h6"} sx={{ color: 'white' }}>
+              Registered Users
+            </Typography>
+          </Box>
+          <Box sx={{ mb: 0 }}>
+            <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'center'} spacing={1}>
+              <Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+                <Box sx={{ backgroundColor: theme.palette.info.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                    Users : 100
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+                <Box sx={{ backgroundColor: theme.palette.error.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                    Others : 100
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                    Total : 200
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
         <Box sx={{ mb: 2 }}>
           <PerfectScrollbar>
