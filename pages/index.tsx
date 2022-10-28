@@ -92,26 +92,28 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{ mb: 3 }}>
-        <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
-          <Box sx={{ mb: 2, mt: 3 }}>
-            <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
-              <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+        <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
+          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.4)', py: 2, px: 2 }}>
+            <Box sx={{ mb: 2, mt: 3 }}>
+              <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
+                <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                </Grid>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
+                    Ilham & Refni
+                  </Typography>
+                </Grid>
+                <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                </Grid>
               </Grid>
-              <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
-                  Ilham & Refni
-                </Typography>
-              </Grid>
-              <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
-              </Grid>
-            </Grid>
-          </Box>
-          <Box sx={{ mb: 5, mt: 3 }}>
-            <Typography align={'center'} variant={"h4"} sx={{ color: 'white' }}>
-              You’re Invited to Our Wedding Party!
-            </Typography>
+            </Box>
+            <Box sx={{ mb: 5, mt: 3 }}>
+              <Typography align={'center'} variant={"h4"} sx={{ color: 'white' }}>
+                You’re Invited to Our Wedding Party!
+              </Typography>
+            </Box>
           </Box>
         </Box>
         <Box sx={{ backgroundColor: '#2b2b2b', borderRadius: '30px', py: 2, px: 3, mt: -4 }}>

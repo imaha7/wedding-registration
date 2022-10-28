@@ -54,26 +54,28 @@ const Invitation: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
-        <Box sx={{ minHeight: '350px', backgroundImage: `url(${"/background.jpg"})`, backgroundRepeat: "no-repeat", py: 2, px: 2 }}>
-          <Box sx={{ mb: 0 }}>
-            <Typography variant={"h4"} sx={{ color: 'white' }}>
-              Hello, John Doe!
-            </Typography>
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography variant={"subtitle1"} sx={{ color: 'white' }}>
-              You’re Invited to Our Wedding!
-            </Typography>
-          </Box>
-          <Box sx={{ mb: 2, mt: 3 }}>
-            <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
-              <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <Avatar alt={'picture 1'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+        <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
+          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.4)', py: 2, px: 2 }}>
+            <Box sx={{ mb: 0 }}>
+              <Typography variant={"h4"} sx={{ color: 'white' }}>
+                Hello, John Doe!
+              </Typography>
+            </Box>
+            <Box sx={{ mb: 3 }}>
+              <Typography variant={"subtitle1"} sx={{ color: 'white' }}>
+                You’re Invited to Our Wedding!
+              </Typography>
+            </Box>
+            <Box sx={{ mb: 2, mt: 3 }}>
+              <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
+                <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
+                  <Avatar alt={'picture 1'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                </Grid>
+                <Grid container justifyContent={'flex-start'} item xs={6} sm={6} md={6} lg={6} xl={6}>
+                  <Avatar alt={'picture 3'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                </Grid>
               </Grid>
-              <Grid container justifyContent={'flex-start'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <Avatar alt={'picture 3'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
         </Box>
         <Box sx={{ backgroundColor: '#2b2b2b', borderRadius: '30px', py: 2, px: 3, mt: -4 }}>
