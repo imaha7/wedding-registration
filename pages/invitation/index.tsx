@@ -55,7 +55,7 @@ const Invitation: NextPage = () => {
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
-          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.4)', py: 2, px: 2 }}>
+          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.6)', py: 2, px: 2 }}>
             <Box sx={{ mb: 0 }}>
               <Typography variant={"h4"} sx={{ color: 'white' }}>
                 Hello, John Doe!
@@ -69,10 +69,10 @@ const Invitation: NextPage = () => {
             <Box sx={{ mb: 2, mt: 3 }}>
               <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
                 <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Avatar alt={'picture 1'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                  <Avatar alt={'picture 1'} src={"/ilham.png"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
                 </Grid>
                 <Grid container justifyContent={'flex-start'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Avatar alt={'picture 3'} src={"/background.jpg"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                  <Avatar alt={'picture 3'} src={"/refni.png"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
                 </Grid>
               </Grid>
             </Box>

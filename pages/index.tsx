@@ -93,11 +93,11 @@ const Home: NextPage = () => {
       </Head>
       <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
-          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.4)', py: 2, px: 2 }}>
+          <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.6)', py: 2, px: 2 }}>
             <Box sx={{ mb: 2, mt: 3 }}>
               <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
                 <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                  <Avatar alt={'picture 1'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                  <Avatar alt={'picture 1'} src={"/ilham.png"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
                 </Grid>
                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                   <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
                   </Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                  <Avatar alt={'picture 3'} src={"https://xsgames.co/randomusers/avatar.php?g=male"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                  <Avatar alt={'picture 3'} src={"/refni.png"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
                 </Grid>
               </Grid>
             </Box>
