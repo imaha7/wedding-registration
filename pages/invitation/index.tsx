@@ -7,7 +7,8 @@ import { getUsers } from "../../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
 import { useRouter } from 'next/router';
-import { toPng } from 'html-to-image'
+import { toPng } from 'html-to-image';
+import useSound from 'use-sound';
 
 const Invitation: NextPage = () => {
   const theme = useTheme();
@@ -15,6 +16,7 @@ const Invitation: NextPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>([]);
   const ref = useRef<HTMLDivElement>(null);
+  const [play] = useSound('audio.mp3');
 
   const downloadPng = useCallback(() => {
     if (ref.current === null) {
@@ -44,14 +46,16 @@ const Invitation: NextPage = () => {
     },
   });
 
-  useEffect(() => { }, []);
+  useEffect(() => {
+    play();
+  }, []);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', px: 0 }}>
       <Head>
         <title>Invitation Wedding</title>
         <meta name="description" content="Invitation Wedding" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/bg-wedding.webp" />
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>

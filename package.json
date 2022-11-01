@@ -23,7 +23,8 @@
     "react-dom": "18.2.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-qr-code": "^2.0.8",
-    "use-react-screenshot": "^3.0.0"
+    "use-react-screenshot": "^3.0.0",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@types/node": "18.11.4",

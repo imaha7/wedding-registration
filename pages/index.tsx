@@ -1,11 +1,13 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, CircularProgress, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, ToggleButtonGroup, FormControl, Input, InputAdornment, FormHelperText, Button } from '@mui/material';
 import { GroupsOutlined, PersonOutlineOutlined } from '@mui/icons-material';
 import { getUsers } from "../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
+import useSound from 'use-sound';
+import audio from '/sound.mp3';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   backgroundColor: 'white',
@@ -39,6 +41,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
+
 const Home: NextPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
@@ -48,6 +51,7 @@ const Home: NextPage = () => {
   const [name, setName] = useState<any>('');
   const [guestCount, setGuestCount] = useState<any>(null);
   const [tab, setTab] = useState('register');
+  const [play] = useSound('audio.mp3');
 
   const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -82,14 +86,16 @@ const Home: NextPage = () => {
     },
   });
 
-  useEffect(() => { }, [username, guestCount]);
+  useEffect(() => {
+    play();
+  }, []);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', px: 0 }}>
       <Head>
         <title>Ilham & Refni Wedding</title>
         <meta name="description" content="Ilham & Refni Wedding" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/bg-wedding.webp" />
       </Head>
       <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>

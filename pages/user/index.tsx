@@ -66,7 +66,7 @@ const User: NextPage = () => {
       <Head>
         <title>List Users</title>
         <meta name="description" content="List Users" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/bg-wedding.webp" />
       </Head>
       <Box sx={{ mb: 0 }}>
         <Box sx={{ backgroundColor: '#2b2b2b', mb: 3 }}>
