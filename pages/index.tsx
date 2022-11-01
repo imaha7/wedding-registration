@@ -7,7 +7,6 @@ import { getUsers } from "../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import useSound from 'use-sound';
-import audio from '/sound.mp3';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   backgroundColor: 'white',
