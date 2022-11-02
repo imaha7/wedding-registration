@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
 import { useRouter } from 'next/router';
 import { toPng } from 'html-to-image';
-import useSound from 'use-sound';
+import Image from 'next/image';
 
 const Invitation: NextPage = () => {
   const theme = useTheme();
@@ -16,7 +16,6 @@ const Invitation: NextPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>([]);
   const ref = useRef<HTMLDivElement>(null);
-  const [play] = useSound('audio.mp3');
 
   const downloadPng = useCallback(() => {
     if (ref.current === null) {
@@ -46,9 +45,7 @@ const Invitation: NextPage = () => {
     },
   });
 
-  useEffect(() => {
-    play();
-  }, []);
+  useEffect(() => { }, []);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', px: 0 }}>
@@ -73,10 +70,24 @@ const Invitation: NextPage = () => {
             <Box sx={{ mb: 2, mt: 3 }}>
               <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
                 <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Avatar alt={'picture 1'} src={"/ilham.png"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                  <Image
+                    width={!isMobile ? 100 : 156}
+                    height={!isMobile ? 100 : 156}
+                    src={"/ilham.png"}
+                    alt={"ilham"}
+                    priority
+                    style={{ borderRadius: "10px" }}
+                  />
                 </Grid>
                 <Grid container justifyContent={'flex-start'} item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Avatar alt={'picture 3'} src={"/refni.png"} variant={"rounded"} sx={{ width: !isMobile ? 128 : 156, height: !isMobile ? 128 : 156, borderRadius: '10px' }} />
+                  <Image
+                    width={!isMobile ? 100 : 156}
+                    height={!isMobile ? 100 : 156}
+                    src={"/refni.png"}
+                    alt={"refni"}
+                    priority
+                    style={{ borderRadius: "10px" }}
+                  />
                 </Grid>
               </Grid>
             </Box>

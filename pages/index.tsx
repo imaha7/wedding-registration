@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useState, useEffect, useRef } from 'react';
-import { Box, CircularProgress, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, ToggleButtonGroup, FormControl, Input, InputAdornment, FormHelperText, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, CircularProgress, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, ToggleButtonGroup, FormControl, Input, InputAdornment, Button } from '@mui/material';
 import { GroupsOutlined, PersonOutlineOutlined } from '@mui/icons-material';
 import { getUsers } from "../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
-import useSound from 'use-sound';
+import Image from 'next/image';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   backgroundColor: 'white',
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
   const [name, setName] = useState<any>('');
   const [guestCount, setGuestCount] = useState<any>(null);
   const [tab, setTab] = useState('register');
-  const [play] = useSound('audio.mp3');
+  let audio: any = null;
 
   const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -86,7 +86,8 @@ const Home: NextPage = () => {
   });
 
   useEffect(() => {
-    play();
+    audio = new Audio('/audio.mp3');
+    audio?.play();
   }, []);
 
   return (
@@ -102,7 +103,14 @@ const Home: NextPage = () => {
             <Box sx={{ mb: 2, mt: 3 }}>
               <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={!isMobile ? 2 : 0}>
                 <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                  <Avatar alt={'picture 1'} src={"/ilham.png"} variant={"rounded"} sx={{ minWidth: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                  <Image
+                    width={!isMobile ? 100 : 156}
+                    height={!isMobile ? 100 : 156}
+                    src={"/ilham.png"}
+                    alt={"ilham"}
+                    priority
+                    style={{ borderRadius: "10px" }}
+                  />
                 </Grid>
                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                   <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
@@ -110,7 +118,14 @@ const Home: NextPage = () => {
                   </Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                  <Avatar alt={'picture 3'} src={"/refni.png"} variant={"rounded"} sx={{ width: !isMobile ? 100 : 156, height: !isMobile ? 100 : 156, borderRadius: '10px' }} />
+                  <Image
+                    width={!isMobile ? 100 : 156}
+                    height={!isMobile ? 100 : 156}
+                    src={"/refni.png"}
+                    alt={"refni"}
+                    priority
+                    style={{ borderRadius: "10px" }}
+                  />
                 </Grid>
               </Grid>
             </Box>
@@ -211,7 +226,9 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation') }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{tab === 'register' ? 'Register' : 'Login'}</Button>
+            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => {router.push('/invitation');}} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>
+              {tab === 'register' ? 'Register' : 'Login'}
+            </Button>
           </Box>
         </Box>
       </Box>
