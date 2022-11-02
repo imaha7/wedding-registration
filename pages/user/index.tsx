@@ -126,9 +126,14 @@ const User: NextPage = () => {
                                 </Box>
                               </Stack>
                             </Box>
-                            <Box>
+                            <Box sx={{ mb: 2 }}>
                               <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
                                 Family / Friends / Partner / Invited Guest Count : 2
+                              </Typography>
+                            </Box>
+                            <Box sx={{ minHeight: '80px', border: '2px solid ' + theme.palette.primary.main, borderRadius: '10px', p: 1}}>
+                              <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word', my: 'auto' }}>
+                                Congraattsss to youuu......
                               </Typography>
                             </Box>
                           </Box>

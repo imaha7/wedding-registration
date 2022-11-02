@@ -49,6 +49,7 @@ const Home: NextPage = () => {
   const [username, setUsername] = useState<any>('');
   const [name, setName] = useState<any>('');
   const [guestCount, setGuestCount] = useState<any>(null);
+  const [words, setWords] = useState<any>('');
   const [tab, setTab] = useState('register');
   let audio: any = null;
 
@@ -62,6 +63,10 @@ const Home: NextPage = () => {
 
   const handleChangeGuestCount = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGuestCount(event.target.value);
+  };
+
+  const handleChangeWords = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWords(event.target.value);
   };
 
   const handleClickTab = (event: React.MouseEvent<HTMLElement>, tab: string | null) => {
@@ -208,7 +213,7 @@ const Home: NextPage = () => {
               Family / Friend / Partner / Invited Guest Count
             </Typography>
           </Box>
-          <Box sx={{ width: '100%', color: 'white', mb: 5, display: tab === 'login' ? 'none' : 'normal' }}>
+          <Box sx={{ width: '100%', color: 'white', mb: 4, display: tab === 'login' ? 'none' : 'normal' }}>
             <FormControl variant="standard" fullWidth>
               <Input
                 id="standard-adornment-weight"
@@ -222,6 +227,25 @@ const Home: NextPage = () => {
                   'aria-label': 'weight',
                 }}
                 sx={{ borderBottom: '1px solid white', color: 'white' }}
+              />
+              {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
+            </FormControl>
+          </Box>
+          <Box sx={{ width: '100%', color: 'white', mb: 5, display: tab === 'login' ? 'none' : 'normal' }}>
+            <FormControl variant="filled" fullWidth>
+              <Input
+                id="filled-adornment-weight"
+                placeholder={"Congratulate to them...."}
+                value={words}
+                onChange={handleChangeWords}
+                aria-describedby="filled-weight-helper-text"
+                inputProps={{
+                  'aria-label': 'weight',
+                }}
+                multiline
+                rows={4}
+                disableUnderline={true}
+                sx={{ backgroundColor: '#4D4D4D', borderRadius: '10px', color: 'white', border: 0, p: 1 }}
               />
               {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
             </FormControl>
