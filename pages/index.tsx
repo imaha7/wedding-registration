@@ -87,7 +87,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     audio = new Audio('/audio.mp3');
-    audio?.play();
+    audio.autoplay = true;
+    // audio?.play();
   }, []);
 
   return (
