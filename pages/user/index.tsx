@@ -67,6 +67,7 @@ const User: NextPage = () => {
         <title>List Users</title>
         <meta name="description" content="List Users" />
         <link rel="icon" href="/bg-wedding.webp" />
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
       </Head>
       <Box sx={{ mb: 0 }}>
         <Box sx={{ backgroundColor: '#2b2b2b', mb: 3 }}>

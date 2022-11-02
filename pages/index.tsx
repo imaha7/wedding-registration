@@ -102,6 +102,10 @@ const Home: NextPage = () => {
         <title>Ilham & Refni Wedding</title>
         <meta name="description" content="Ilham & Refni Wedding" />
         <link rel="icon" href="/bg-wedding.webp" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
       </Head>
       <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
@@ -251,7 +255,7 @@ const Home: NextPage = () => {
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => {router.push('/invitation');}} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>
+            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation'); }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>
               {tab === 'register' ? 'Register' : 'Login'}
             </Button>
           </Box>

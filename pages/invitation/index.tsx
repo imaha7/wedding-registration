@@ -53,6 +53,7 @@ const Invitation: NextPage = () => {
         <title>Invitation Wedding</title>
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/bg-wedding.webp" />
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
