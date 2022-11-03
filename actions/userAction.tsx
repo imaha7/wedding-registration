@@ -1,21 +1,35 @@
 import axios from "../utils/axios";
 
-export const getUsers = async () => {
-    let response = await axios.get('/pokemon?limit=0');
+export const getUsers = async ({ name }: any) => {
+    let response = await axios.get('/posts?name=' + name);
     try {
-        // if (order) {
-        //     response = await axios.get('/users?order=' + order + '&page=' + page + '&take=' + take + '&search=' + search + '&type_user=' + type_user);
-        // } else if (take <= 50) {
-        //     response = await axios.get('/users?page=' + page + '&take=' + take + '&search=' + search + '&type_user=' + type_user);
-        // } else {
-        //     response = await axios.get('/users?page=' + page + '&search=' + search + '&type_user=' + type_user);
-        // }
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};
 
-        // if (response.status) {
-        //     return response.data;
-        // } else {
-        //     return arr;
-        // }
+export const checkUser = async ({ username }: any) => {
+    let response = await axios.get('/check?username=' + username);
+    try {
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const showUser = async ({ id }: any) => {
+    let response = await axios.get('/posts/' + id);
+    try {
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const createUser = async ({ username, name, invited_guests_count, status, congrats_words }: any) => {
+    let response = await axios.post('/posts', { username: username, name: name, invited_guests_count: invited_guests_count, status: status, congrats_words: congrats_words });
+    try {
         return response.data;
     } catch (error) {
         return error;

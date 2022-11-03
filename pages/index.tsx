@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState, useEffect } from 'react';
-import { Box, CircularProgress, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, ToggleButtonGroup, FormControl, Input, InputAdornment, Button } from '@mui/material';
+import { Box, ToggleButton, Typography, styled, useMediaQuery, useTheme, Container, Grid, ToggleButtonGroup, FormControl, Input, InputAdornment, FormHelperText } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { GroupsOutlined, PersonOutlineOutlined } from '@mui/icons-material';
-import { getUsers } from "../actions/userAction";
+import { createUser, checkUser } from "../actions/userAction";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -50,6 +51,9 @@ const Home: NextPage = () => {
   const [name, setName] = useState<any>('');
   const [guestCount, setGuestCount] = useState<any>(null);
   const [words, setWords] = useState<any>('');
+  const [error, setError] = useState<any>(false);
+  const [helperText, setHelperText] = useState<any>('');
+
   const [tab, setTab] = useState('register');
   let audio: any = null;
 
@@ -78,14 +82,48 @@ const Home: NextPage = () => {
     setGuestCount('');
   };
 
-  const getUsersRandom = useMutation(() => getUsers(), {
+  const createUserRegistration = useMutation(() => createUser({ username: username, name: name, invited_guests_count: guestCount, status: 'will attend', congrats_words: words }), {
     onMutate: () => {
-      return {};
+      return { username: username, name: name, invited_guests_count: guestCount, status: 'will attend', congrats_words: words };
     },
-    onSuccess: (response: any) => {
-      setUser(response.results);
+    onSuccess: (response) => {
+      setError(false);
+      setHelperText('');
+      setUser(response.data);
+      router.push({
+        pathname: '/invitation',
+        query: { id: response.data.id, username: response.data.username },
+      });
     },
-    onError: (error: any) => {
+    onError: (error) => {
+      setError(true);
+      setHelperText('Username has been used');
+      console.log("error", error);
+    },
+  });
+
+  const checkUserRegistration = useMutation(() => checkUser({ username: username }), {
+    onMutate: () => {
+      setError(false);
+      return { username: username };
+    },
+    onSuccess: (response) => {
+      if (response.data.length > 0) {
+        setError(false);
+        setHelperText('');
+        setUser(response.data);
+        router.push({
+          pathname: '/invitation',
+          query: { id: response.data[0].id, username: response.data[0].username },
+        });
+      } else {
+        setError(true);
+        setHelperText('Username has been not registered yet!');
+      }
+    },
+    onError: (error) => {
+      setError(true);
+      setHelperText('Username has been not registered yet!');
       console.log("error", error);
     },
   });
@@ -104,8 +142,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/bg-wedding.webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"/>
-        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
       </Head>
       <Box sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
@@ -174,7 +212,7 @@ const Home: NextPage = () => {
             </Typography>
           </Box>
           <Box sx={{ width: '100%', color: 'white', mb: 4 }}>
-            <FormControl variant="standard" fullWidth>
+            <FormControl variant="standard" fullWidth error={error}>
               <Input
                 id="standard-adornment-weight"
                 placeholder={"e.g : username"}
@@ -187,7 +225,7 @@ const Home: NextPage = () => {
                 }}
                 sx={{ borderBottom: '1px solid white', color: 'white' }}
               />
-              {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
+              {tab === 'register' ? (createUserRegistration.isError ? <FormHelperText id="standard-helper-text">{helperText}</FormHelperText> : null) : (checkUserRegistration.isError ? <FormHelperText id="standard-helper-text">{helperText}</FormHelperText> : null)}
             </FormControl>
           </Box>
           <Box sx={{ mb: 0.5, display: tab === 'login' ? 'none' : 'normal' }}>
@@ -251,13 +289,19 @@ const Home: NextPage = () => {
                 disableUnderline={true}
                 sx={{ backgroundColor: '#4D4D4D', borderRadius: '10px', color: 'white', border: 0, p: 1 }}
               />
-              {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
             </FormControl>
           </Box>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
-            <Button fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)} onClick={() => { router.push('/invitation'); }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>
+            <LoadingButton loading={tab === 'register' ? createUserRegistration.isLoading : checkUserRegistration.isLoading} fullWidth variant="contained" disabled={tab === 'register' ? (username && name && guestCount ? false : true) : (username ? false : true)}
+              onClick={() => {
+                if (tab === 'register') {
+                  createUserRegistration.mutate();
+                } else {
+                  checkUserRegistration.mutate();
+                }
+              }} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>
               {tab === 'register' ? 'Register' : 'Login'}
-            </Button>
+            </LoadingButton>
           </Box>
         </Box>
       </Box>

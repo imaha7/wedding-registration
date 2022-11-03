@@ -1,10 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from 'next';
+import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, styled, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton } from '@mui/material';
-import { LocationOnOutlined, SearchOutlined } from '@mui/icons-material';
+import { Box, Typography, useMediaQuery, useTheme, Container, Grid, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton, Skeleton } from '@mui/material';
+import { SearchOutlined } from '@mui/icons-material';
 import { getUsers } from "../../actions/userAction";
-import { useMutation, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -12,54 +12,33 @@ const User: NextPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
+  const [search, setSearch] = useState('');
   const [user, setUser] = useState<any>([]);
+  const [total, setTotal] = useState<any>(null);
 
-  // const getUsersRandom = useMutation(() => getUsers(), {
-  //   onMutate: () => {
-  //     return {};
-  //   },
-  //   onSuccess: (response: any) => {
-  //     setUser(response.results);
-  //   },
-  //   onError: (error: any) => {
-  //     console.log("error", error);
-  //   },
-  // });
+  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
-  // const getUsersRegistration = useQuery(['getUsers'], () => getUsers(), {
-  //   keepPreviousData: true,
-  //   refetchOnWindowFocus: false,
-  //   onSuccess: (response) => {
-  //     if (response.results) {
-  //       setUser(response.results);
-  //       console.log("Data : ", user);
-  //     } else {
-  //       setUser([]);
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   }
-  // });
+  const getUsersRegistration = useQuery(['getUsers', search], () => getUsers({ name: search }), {
+    keepPreviousData: false,
+    refetchOnWindowFocus: false,
+    onSuccess: (response) => {
+      if (response.data) {
+        setUser(response.data);
+        setTotal(response.total);
+        console.log("Data : ", user);
+      } else {
+        setUser([]);
+        setTotal(null);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
-  const fetchPokemons = async ({ pageParam = 0 }) => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=' + pageParam + 'offset=0');
-    return res.json();
-  }
-
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(['results'], fetchPokemons, {
-    getNextPageParam: (lastPage: any, pages: any) => lastPage.nextCursor,
-  })
-
-  useEffect(() => { }, []);
+  useEffect(() => { getUsersRegistration }, [search]);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', p: 3 }}>
@@ -67,7 +46,7 @@ const User: NextPage = () => {
         <title>List Users</title>
         <meta name="description" content="List Users" />
         <link rel="icon" href="/bg-wedding.webp" />
-        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
       </Head>
       <Box sx={{ mb: 0 }}>
         <Box sx={{ backgroundColor: '#2b2b2b', mb: 3 }}>
@@ -79,81 +58,86 @@ const User: NextPage = () => {
           <Box sx={{ mb: 0 }}>
             <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'center'} spacing={1}>
               <Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
-                <Box sx={{ backgroundColor: theme.palette.info.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
-                    Users : 100
-                  </Typography>
-                </Box>
+                {getUsersRegistration.isFetching ?
+                  <Skeleton variant="rounded" width={'100%'} height={30} sx={{ borderRadius: '10px' }} /> :
+                  <Box sx={{ backgroundColor: theme.palette.info.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                    <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                      Users : {total ? total.userCount : ''}
+                    </Typography>
+                  </Box>
+                }
               </Grid>
               <Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
-                <Box sx={{ backgroundColor: theme.palette.error.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
-                    Others : 100
-                  </Typography>
-                </Box>
+                {getUsersRegistration.isFetching ?
+                  <Skeleton variant="rounded" width={'100%'} height={30} sx={{ borderRadius: '10px' }} /> :
+                  <Box sx={{ backgroundColor: theme.palette.error.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                    <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                      Others : {total ? total.guestCount : ''}
+                    </Typography>
+                  </Box>
+                }
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                  <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
-                    Total : 200
-                  </Typography>
-                </Box>
+                {getUsersRegistration.isFetching ?
+                  <Skeleton variant="rounded" width={'100%'} height={30} sx={{ borderRadius: '10px' }} /> :
+                  <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                    <Typography variant={"subtitle1"} align={'center'} sx={{ color: 'white' }}>
+                      Total : {total ? total.userGuestCount : ''}
+                    </Typography>
+                  </Box>
+                }
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ minHeight: '100vh', mb: 2 }}>
           <PerfectScrollbar>
-            {status === 'loading' ?
-              <p>Loading...</p> :
-              <>
-                {
-                  data?.pages.map((group: any, index: number) => (
-                    <React.Fragment key={index}>
-                      {group.results.map((item: any) => (
-                        <ListItemButton key={item.name} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
-                          <Box sx={{ width: '100%' }}>
-                            <Box sx={{ mb: 1 }}>
-                              <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                                <Box>
-                                  <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                                    {item.name}
-                                  </Typography>
-                                </Box>
-                                <Box sx={{ backgroundColor: theme.palette.primary.main, borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                                  <Typography variant={"caption"} align={'center'} sx={{ color: 'white' }}>
-                                    Will Attend
-                                  </Typography>
-                                </Box>
-                              </Stack>
-                            </Box>
-                            <Box sx={{ mb: 2 }}>
-                              <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                                Family / Friends / Partner / Invited Guest Count : 2
-                              </Typography>
-                            </Box>
-                            <Box sx={{ minHeight: '80px', border: '2px solid ' + theme.palette.primary.main, borderRadius: '10px', p: 1}}>
-                              <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word', my: 'auto' }}>
-                                Congraattsss to youuu......
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </ListItemButton>
-                      ))}
-                    </React.Fragment>
-                  ))
-                }
-              </>
+            {getUsersRegistration.isFetching ?
+              <Skeleton variant="rounded" width={'100%'} height={160} sx={{ borderRadius: '10px' }} /> :
+              user.map((item: any) => (
+                <ListItemButton key={item.id} onClick={() => {
+                  router.push({
+                    pathname: '/invitation',
+                    query: { id: item.id, username: item.username },
+                  })
+                }} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
+                  <Box sx={{ width: '100%' }}>
+                    <Box sx={{ mb: 1 }}>
+                      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
+                        <Box>
+                          <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                            {item.name}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ backgroundColor: item.status === 'will attend' ? theme.palette.primary.main : (item.status === 'attended' ? theme.palette.success.main : theme.palette.error.main), borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                          <Typography variant={"caption"} align={'center'} sx={{ color: 'white', textTransform: 'capitalize' }}>
+                            {item.status}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Box>
+                    <Box sx={{ mb: 2 }}>
+                      <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                        Family / Friends / Partner / Invited Guest Count : {item.invited_guests_count}
+                      </Typography>
+                    </Box>
+                    {item.congrats_words ?
+                      <Box sx={{ minHeight: '80px', border: item.status === 'will attend' ? '2px solid ' + theme.palette.primary.main : (item.status === 'attended' ? '2px solid ' + theme.palette.success.main : '2px solid ' + theme.palette.error.main), borderRadius: '10px', p: 1 }}>
+                        <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word', my: 'auto' }}>
+                          {item.congrats_words}
+                        </Typography>
+                      </Box> : null
+                    }
+                  </Box>
+                </ListItemButton>
+              ))
             }
-            <Box>
+            {/* <Box>
               <Button fullWidth variant="contained" disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{isFetchingNextPage ? 'Loading more...' : (hasNextPage ? 'Load More' : 'Nothing more to load')}</Button>
-            </Box>
-            <Box>
-              {isFetching && !isFetchingNextPage ?
-                <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                  Fetching...
-                </Typography> : null}
-            </Box>
+            </Box> */}
+            {/* <Box>
+              {isFetching && !isFetchingNextPage ? <Skeleton variant="rounded" width={'100%'} height={60} /> : null}
+            </Box> */}
           </PerfectScrollbar>
         </Box>
         <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#2b2b2b' }}>
@@ -164,8 +148,8 @@ const User: NextPage = () => {
                   <OutlinedInput
                     id="outlined-adornment-weight"
                     placeholder={"e.g : John Doe"}
-                    // value={name}
-                    // onChange={handleChangeName}
+                    value={search}
+                    onChange={handleChangeSearch}
                     aria-describedby="outlined-weight-helper-text"
                     inputProps={{
                       'aria-label': 'weight',
@@ -176,7 +160,7 @@ const User: NextPage = () => {
                 </FormControl>
               </Box>
               <Box sx={{ textAlign: 'center', backgroundColor: theme.palette.primary.main, borderRadius: '10px' }}>
-                <IconButton color="primary" size={'small'} aria-label="location" component="label">
+                <IconButton color="primary" size={'small'} aria-label="location" component="label" onClick={() => { getUsersRegistration.refetch() }}>
                   <SearchOutlined sx={{ color: 'white' }} />
                 </IconButton>
               </Box>

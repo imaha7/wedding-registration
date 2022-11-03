@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { Box, Typography, useMediaQuery, useTheme, Container, Grid, Avatar, Button, IconButton } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme, Container, Grid, Button, IconButton, Skeleton } from '@mui/material';
 import { LocationOnOutlined } from '@mui/icons-material';
-import { getUsers } from "../../actions/userAction";
-import { useMutation } from "@tanstack/react-query";
+import { showUser } from "../../actions/userAction";
+import { useQuery } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
 import { useRouter } from 'next/router';
 import { toPng } from 'html-to-image';
@@ -33,19 +33,23 @@ const Invitation: NextPage = () => {
       })
   }, [ref]);
 
-  const getUsersRandom = useMutation(() => getUsers(), {
-    onMutate: () => {
-      return {};
+  const showUserRegistration = useQuery(['showUser', router.query.id], () => showUser({ id: router.query.id }), {
+    keepPreviousData: false,
+    refetchOnWindowFocus: false,
+    onSuccess: (response) => {
+      if (response.data) {
+        setUser(response.data);
+        console.log("Data : ", user);
+      } else {
+        setUser([]);
+      }
     },
-    onSuccess: (response: any) => {
-      setUser(response.results);
-    },
-    onError: (error: any) => {
-      console.log("error", error);
-    },
+    onError: (error) => {
+      console.log(error);
+    }
   });
 
-  useEffect(() => { }, []);
+  useEffect(() => { showUserRegistration }, []);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', px: 0 }}>
@@ -53,15 +57,18 @@ const Invitation: NextPage = () => {
         <title>Invitation Wedding</title>
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/bg-wedding.webp" />
-        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet"/>
+        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
           <Box sx={{ minHeight: '350px', background: 'rgba(0, 0, 0, 0.6)', py: 2, px: 2 }}>
             <Box sx={{ mb: 0 }}>
-              <Typography variant={"h4"} sx={{ color: 'white' }}>
-                Hello, John Doe!
-              </Typography>
+              {showUserRegistration.isFetching ?
+                <Skeleton variant="rounded" width={'100%'} height={40} sx={{ borderRadius: '10px' }} /> :
+                <Typography variant={"h4"} sx={{ color: 'white' }}>
+                  Hello, {user.name}!
+                </Typography>
+              }
             </Box>
             <Box sx={{ mb: 3 }}>
               <Typography variant={"subtitle1"} sx={{ color: 'white' }}>
@@ -96,23 +103,32 @@ const Invitation: NextPage = () => {
         </Box>
         <Box sx={{ backgroundColor: '#2b2b2b', borderRadius: '30px', py: 2, px: 3, mt: -4 }}>
           <Box sx={{ mb: 1 }}>
-            <Typography variant={"h5"} sx={{ color: 'white' }}>
-              John Doe
-            </Typography>
+            {showUserRegistration.isFetching ?
+              <Skeleton variant="rounded" width={'100%'} height={40} sx={{ borderRadius: '10px' }} /> :
+              <Typography variant={"h5"} sx={{ color: 'white' }}>
+                {user.name}
+              </Typography>
+            }
           </Box>
           <Box sx={{ mb: 3 }}>
-            <Typography variant={"body1"} sx={{ color: 'white' }}>
-              Family / Friends / Partner / Invited Guest Count : 2
-            </Typography>
+            {showUserRegistration.isFetching ?
+              <Skeleton variant="rounded" width={'100%'} height={40} sx={{ borderRadius: '10px' }} /> :
+              <Typography variant={"body1"} sx={{ color: 'white' }}>
+                Family / Friends / Partner / Invited Guest Count : {user.invited_guests_count}
+              </Typography>
+            }
           </Box>
           <Box sx={{ backgroundColor: 'white', borderRadius: '15px', p: 2, mb: 4 }}>
-            <QRCode
-              id={'qr-code'}
-              size={48}
-              style={{ height: "auto", width: "100%", textAlign: 'center', }}
-              value={'1'}
-              viewBox={`0 0 48 48`}
-            />
+            {showUserRegistration.isFetching ?
+              <Skeleton variant="rounded" width={'100%'} height={160} sx={{ borderRadius: '10px' }} /> :
+              <QRCode
+                id={'qr-code'}
+                size={48}
+                style={{ height: "auto", width: "100%", textAlign: 'center', }}
+                value={user}
+                viewBox={`0 0 48 48`}
+              />
+            }
           </Box>
           <Box>
             <Grid container justifyContent={'space-between'} alignItems={'center'} spacing={2}>
