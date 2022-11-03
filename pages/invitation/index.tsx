@@ -75,7 +75,7 @@ const Invitation: NextPage = () => {
                 You’re Invited to Our Wedding!
               </Typography>
             </Box>
-            <Box sx={{ mb: 2, mt: 3 }}>
+            <Box sx={{ mb: 4, mt: 3 }}>
               <Grid container justifyContent={'center'} alignItems={'center'} spacing={4}>
                 <Grid container justifyContent={'flex-end'} item xs={6} sm={6} md={6} lg={6} xl={6}>
                   <Image
@@ -98,6 +98,21 @@ const Invitation: NextPage = () => {
                   />
                 </Grid>
               </Grid>
+            </Box>
+            <Box sx={{ mb: 1 }}>
+              <Typography align={'center'} variant={"h4"} sx={{ fontFamily: 'Great Vibes', color: 'white' }}>
+                Ilham & Refni
+              </Typography>
+            </Box>
+            <Box>
+              <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
+                Mesjid Taqwa Muhammadiyah Islamic Center
+              </Typography>
+            </Box>
+            <Box sx={{ mb: 5 }}>
+              <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
+                2 April 2023, 8.00 AM - 17.30 PM
+              </Typography>
             </Box>
           </Box>
         </Box>
