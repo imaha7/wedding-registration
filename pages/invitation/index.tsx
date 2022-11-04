@@ -140,7 +140,7 @@ const Invitation: NextPage = () => {
                 id={'qr-code'}
                 size={48}
                 style={{ height: "auto", width: "100%", textAlign: 'center', }}
-                value={user.id}
+                value={(user.id).toString()}
                 viewBox={`0 0 48 48`}
               />
             }
