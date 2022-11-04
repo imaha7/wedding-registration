@@ -35,3 +35,12 @@ export const createUser = async ({ username, name, invited_guests_count, status,
         return error;
     }
 };
+
+export const deleteUser = async ({ id }: any) => {
+    let response = await axios.delete('/posts/' + id);
+    try {
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};

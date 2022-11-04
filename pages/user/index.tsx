@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, useMediaQuery, useTheme, Container, Grid, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton, Skeleton } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme, Container, Grid, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton, Skeleton, Button } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
-import { getUsers } from "../../actions/userAction";
-import { useQuery } from "@tanstack/react-query";
+import { getUsers, deleteUser } from "../../actions/userAction";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -36,6 +36,19 @@ const User: NextPage = () => {
     onError: (error) => {
       console.log(error);
     }
+  });
+
+  const deleteUserRegistration = useMutation((id) => deleteUser({ id: id }), {
+    onMutate: (id: any) => {
+      return { id };
+    },
+    onSuccess: (response) => {
+      console.log(response);
+      getUsersRegistration.refetch();
+    },
+    onError: (error) => {
+      console.log("error", error);
+    },
   });
 
   useEffect(() => { getUsersRegistration }, [search]);
@@ -95,49 +108,48 @@ const User: NextPage = () => {
             {getUsersRegistration.isFetching ?
               <Skeleton variant="rounded" width={'100%'} height={160} sx={{ borderRadius: '10px' }} /> :
               user.map((item: any) => (
-                <ListItemButton key={item.id} onClick={() => {
-                  router.push({
-                    pathname: '/invitation',
-                    query: { id: item.id, username: item.username },
-                  })
-                }} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 3 }}>
-                  <Box sx={{ width: '100%' }}>
-                    <Box sx={{ mb: 1 }}>
-                      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
-                        <Box>
-                          <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                            {item.name}
-                          </Typography>
-                        </Box>
-                        <Box sx={{ backgroundColor: item.status === 'will attend' ? theme.palette.primary.main : (item.status === 'attended' ? theme.palette.success.main : theme.palette.error.main), borderRadius: '5px', textAlign: 'center', px: 2 }}>
-                          <Typography variant={"caption"} align={'center'} sx={{ color: 'white', textTransform: 'capitalize' }}>
-                            {item.status}
-                          </Typography>
-                        </Box>
-                      </Stack>
-                    </Box>
-                    <Box sx={{ mb: 2 }}>
-                      <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
-                        Family / Friends / Partner / Invited Guest Count : {item.invited_guests_count}
-                      </Typography>
-                    </Box>
-                    {item.congrats_words ?
-                      <Box sx={{ minHeight: '80px', border: item.status === 'will attend' ? '2px solid ' + theme.palette.primary.main : (item.status === 'attended' ? '2px solid ' + theme.palette.success.main : '2px solid ' + theme.palette.error.main), borderRadius: '10px', p: 1 }}>
-                        <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word', my: 'auto' }}>
-                          {item.congrats_words}
+                <Box key={item.id}>
+                  <ListItemButton onClick={() => {
+                    router.push({
+                      pathname: '/invitation',
+                      query: { id: item.id, username: item.username },
+                    })
+                  }} sx={{ backgroundColor: '#424242', borderRadius: '10px', px: 2, py: 1, mb: 1 }}>
+                    <Box sx={{ width: '100%' }}>
+                      <Box sx={{ mb: 1 }}>
+                        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={1}>
+                          <Box>
+                            <Typography variant={"subtitle1"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                              {item.name}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ backgroundColor: item.status === 'will attend' ? theme.palette.primary.main : (item.status === 'attended' ? theme.palette.success.main : theme.palette.error.main), borderRadius: '5px', textAlign: 'center', px: 2 }}>
+                            <Typography variant={"caption"} align={'center'} sx={{ color: 'white', textTransform: 'capitalize' }}>
+                              {item.status}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </Box>
+                      <Box sx={{ mb: 2 }}>
+                        <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word' }}>
+                          Family / Friends / Partner / Invited Guest Count : {item.invited_guests_count}
                         </Typography>
-                      </Box> : null
-                    }
+                      </Box>
+                      {item.congrats_words ?
+                        <Box sx={{ minHeight: '80px', border: item.status === 'will attend' ? '2px solid ' + theme.palette.primary.main : (item.status === 'attended' ? '2px solid ' + theme.palette.success.main : '2px solid ' + theme.palette.error.main), borderRadius: '10px', p: 1 }}>
+                          <Typography variant={"body2"} sx={{ color: 'white', wordBreak: 'break-word', my: 'auto' }}>
+                            {item.congrats_words}
+                          </Typography>
+                        </Box> : null
+                      }
+                    </Box>
+                  </ListItemButton>
+                  <Box sx={{ mb: 3 }}>
+                    <Button fullWidth variant="contained" color={'error'} onClick={() => deleteUserRegistration.mutate(item.id)} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Delete {item.username}</Button>
                   </Box>
-                </ListItemButton>
+                </Box>
               ))
             }
-            {/* <Box>
-              <Button fullWidth variant="contained" disabled={!hasNextPage || isFetchingNextPage} onClick={() => fetchNextPage()} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>{isFetchingNextPage ? 'Loading more...' : (hasNextPage ? 'Load More' : 'Nothing more to load')}</Button>
-            </Box> */}
-            {/* <Box>
-              {isFetching && !isFetchingNextPage ? <Skeleton variant="rounded" width={'100%'} height={60} /> : null}
-            </Box> */}
           </PerfectScrollbar>
         </Box>
         <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#2b2b2b' }}>
@@ -156,7 +168,6 @@ const User: NextPage = () => {
                     }}
                     sx={{ backgroundColor: '#424242', borderRadius: '10px', color: 'white' }}
                   />
-                  {/* <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText> */}
                 </FormControl>
               </Box>
               <Box sx={{ textAlign: 'center', backgroundColor: theme.palette.primary.main, borderRadius: '10px' }}>
