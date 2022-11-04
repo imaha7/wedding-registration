@@ -49,7 +49,7 @@ const Invitation: NextPage = () => {
     }
   });
 
-  useEffect(() => { showUserRegistration }, []);
+  useEffect(() => { showUserRegistration }, [user]);
 
   return (
     <Container maxWidth="sm" sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#2b2b2b', px: 0 }}>
