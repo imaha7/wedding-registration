@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
     typography: {
-      fontFamily: "Gotham Rounded",
+      fontFamily: "Varela Round",
     }
   });
   const queryClient = useRef(new QueryClient());

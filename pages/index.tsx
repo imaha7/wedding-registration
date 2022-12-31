@@ -142,7 +142,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/bg-wedding.webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Varela Round&display=optional" rel="stylesheet" />
         <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
       </Head>
       <Box sx={{ mb: 3 }}>

@@ -59,6 +59,7 @@ const User: NextPage = () => {
         <title>List Users</title>
         <meta name="description" content="List Users" />
         <link rel="icon" href="/bg-wedding.webp" />
+        <link href="https://fonts.googleapis.com/css2?family=Varela Round&display=optional" rel="stylesheet" />
         <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
       </Head>
       <Box sx={{ mb: 0 }}>
