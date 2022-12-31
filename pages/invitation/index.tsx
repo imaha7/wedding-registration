@@ -57,7 +57,9 @@ const Invitation: NextPage = () => {
         <title>Invitation Wedding</title>
         <meta name="description" content="Invitation Wedding" />
         <link rel="icon" href="/bg-wedding.webp" />
-        <link href="https://fonts.cdnfonts.com/css/gotham-rounded" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
+        <link href="https://fonts.cdnfonts.com/css/maison-neue" rel="stylesheet" />
       </Head>
       <Box ref={ref} sx={{ mb: 3 }}>
         <Box sx={{ minHeight: '350px', backgroundColor: '#eeebee', backgroundImage: `url(${"/bg-wedding.webp"})`, backgroundRepeat: "no-repeat", backgroundPosition: 'center', backgroundSize: 'contain' }}>
@@ -106,12 +108,12 @@ const Invitation: NextPage = () => {
             </Box>
             <Box>
               <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
-                Mesjid Taqwa Muhammadiyah Islamic Center
+                Islamic Center Masjid Taqwa Muhammadiyah
               </Typography>
             </Box>
             <Box sx={{ mb: 5 }}>
               <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
-                2 April 2023, 8.00 AM - 17.30 PM
+                30 April 2023, 8.00 AM - 17.30 PM
               </Typography>
             </Box>
           </Box>
