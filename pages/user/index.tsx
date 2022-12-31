@@ -7,6 +7,7 @@ import { getUsers, deleteUser } from "../../actions/userAction";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import PerfectScrollbar from "react-perfect-scrollbar";
+import QRCode from 'react-qr-code';
 
 const User: NextPage = () => {
   const theme = useTheme();
@@ -144,6 +145,15 @@ const User: NextPage = () => {
                       }
                     </Box>
                   </ListItemButton>
+                  <Box sx={{ backgroundColor: 'white', borderRadius: '15px', p: 2, mb: 4 }}>
+                    <QRCode
+                      id={'qr-code'}
+                      size={24}
+                      style={{ height: "auto", width: "100%", textAlign: 'center', }}
+                      value={(item.id).toString()}
+                      viewBox={`0 0 24 24`}
+                    />
+                  </Box>
                   <Box sx={{ mb: 3 }}>
                     <Button fullWidth variant="contained" color={'error'} onClick={() => deleteUserRegistration.mutate(item.id)} sx={{ borderRadius: '10px', textTransform: 'none', color: 'white' }}>Delete {item.username}</Button>
                   </Box>
