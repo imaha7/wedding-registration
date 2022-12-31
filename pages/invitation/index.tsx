@@ -108,12 +108,12 @@ const Invitation: NextPage = () => {
             </Box>
             <Box>
               <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
-                Mesjid Taqwa Muhammadiyah Islamic Center
+                Islamic Center Masjid Taqwa Muhammadiyah
               </Typography>
             </Box>
             <Box sx={{ mb: 5 }}>
               <Typography align={'center'} variant={"subtitle1"} sx={{ color: 'white' }}>
-                2 April 2023, 8.00 AM - 17.30 PM
+                30 April 2023, 8.00 AM - 17.30 PM
               </Typography>
             </Box>
           </Box>
