@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const BASE_URL = "https://api.wedskuy.com/public/api";
+const BASE_URL = "https://www.api.wedskuy.com/public/api";
 
 const request = axios.create({
   // baseURL: process.env.REACT_APP_BACKEND_URL,

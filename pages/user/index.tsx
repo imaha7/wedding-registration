@@ -2,16 +2,17 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, useMediaQuery, useTheme, Container, Grid, IconButton, Stack, FormControl, Input, OutlinedInput, ListItemButton, Skeleton, Button } from '@mui/material';
-import { SearchOutlined } from '@mui/icons-material';
+import { DownloadOutlined, SearchOutlined } from '@mui/icons-material';
 import { getUsers, deleteUser } from "../../actions/userAction";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import QRCode from 'react-qr-code';
 
+const FileSaver = require('file-saver');
+
 const User: NextPage = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [user, setUser] = useState<any>([]);
@@ -51,6 +52,13 @@ const User: NextPage = () => {
       console.log("error", error);
     },
   });
+
+  const downloadQR = (users: any) => {
+    users.map((item: any) => {
+      FileSaver.saveAs('http://api.qrserver.com/v1/create-qr-code/?data=' + item.id + '&size=312x312&bgcolor=white', "QR-Code-" + item.id + "-" + item.name + ".png");
+    });
+
+  };
 
   useEffect(() => { getUsersRegistration }, [search]);
 
@@ -149,7 +157,7 @@ const User: NextPage = () => {
                   </ListItemButton>
                   <Box sx={{ backgroundColor: 'white', borderRadius: '15px', p: 2, mb: 4 }}>
                     <QRCode
-                      id={'qr-code'}
+                      id={'qr-code-' + item.id}
                       size={24}
                       style={{ height: "auto", width: "100%", textAlign: 'center', }}
                       value={(item.id).toString()}
@@ -185,6 +193,11 @@ const User: NextPage = () => {
               <Box sx={{ textAlign: 'center', backgroundColor: theme.palette.primary.main, borderRadius: '10px' }}>
                 <IconButton color="primary" size={'small'} aria-label="location" component="label" onClick={() => { getUsersRegistration.refetch() }}>
                   <SearchOutlined sx={{ color: 'white' }} />
+                </IconButton>
+              </Box>
+              <Box sx={{ textAlign: 'center', backgroundColor: theme.palette.primary.main, borderRadius: '10px' }}>
+                <IconButton color="primary" size={'small'} aria-label="location" component="label" onClick={() => downloadQR(user)}>
+                  <DownloadOutlined sx={{ color: 'white' }} />
                 </IconButton>
               </Box>
             </Stack>
